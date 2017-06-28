@@ -3,10 +3,14 @@ package RestTests;
 import io.restassured.http.ContentType;
 import org.junit.Test;
 import java.util.ArrayList;
+import java.util.List;
+
 import static io.restassured.RestAssured.*;
+import static io.restassured.path.json.JsonPath.from;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static io.restassured.matcher.RestAssuredMatchers.*;
 import static org.hamcrest.Matchers.*;
+import io.restassured.module.jsv.JsonSchemaValidator.*;
 
 public class RestApiTest extends BaseTest{
 
@@ -62,8 +66,7 @@ public class RestApiTest extends BaseTest{
                 .contentType(ContentType.JSON)
                 .body("mlsId", equalTo(aProperty))
                 .body("property.style", isOneOf("Traditional", "Ranch", "Ranch, Traditional", "Contemporary/Modern", "Other Style"))
-                .statusCode(200);
-    }
+                .statusCode(200);}
 
     @Test
     public void getInvalidProperty(){
@@ -73,6 +76,18 @@ public class RestApiTest extends BaseTest{
                 .then()
                 .contentType(ContentType.JSON)
                 .statusCode(404);
+    }
+
+    @Test
+    public void complexParsingAndValidation(){
+
+        String response = given().auth().basic("simplyrets", "simplyrets").when().get("/properties").asString();
+        List<String> propIds = from(response).getList("property.findAll {it.bathsHalf == 6}.bathsFull");
+
+        List<String> Ids = given().auth().basic("simplyrets", "simplyrets").when().get("/properties").path("property.findAll {it.bathsHalf == 2}.bathsFull");
+
+        System.out.print(propIds.size());
+        System.out.print(Ids.size());
     }
 
 
