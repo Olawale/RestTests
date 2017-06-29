@@ -22,18 +22,18 @@ public class RestApiTest extends BaseTest{
 
     @Test
     public void getAllProperties(){
-        given().auth().basic("simplyrets", "simplyrets")
+        given()
                 .when().get("/properties")
                 .then()
                 .contentType(ContentType.JSON)
-                .time(lessThan(3l), TimeUnit.SECONDS)
+//                .time(lessThan(3l), TimeUnit.SECONDS)
                 .statusCode(200);
     }
 
     @Test
     public void getAProperty(){
 
-        ArrayList<Integer> mlsId = given().auth().basic("simplyrets", "simplyrets")
+        ArrayList<Integer> mlsId = given()
                 .when().get("/properties")
                 .then()
                 .extract().path("mlsId");
@@ -43,7 +43,7 @@ public class RestApiTest extends BaseTest{
         System.out.println("Total number of properties is " +  mlsId.size());
         System.out.println("The property Id is " + aProperty);
 
-        given().auth().basic("simplyrets", "simplyrets")
+        given()
                 .pathParam("mlsId", aProperty)
                 .when().get("/properties/{mlsId}")
                 .then()
@@ -56,7 +56,7 @@ public class RestApiTest extends BaseTest{
     @Test
     public void getAnOpenHouse(){
 
-        ArrayList<Integer> mlsId = given().auth().basic("simplyrets", "simplyrets")
+        ArrayList<Integer> mlsId = given()
                 .when().get("/openhouses")
                 .then()
                 .extract().path("listing.mlsId");
@@ -66,7 +66,7 @@ public class RestApiTest extends BaseTest{
         System.out.println("Total number of properties is " +  mlsId.size());
         System.out.println("The property Id is " + aProperty);
 
-        given().auth().basic("simplyrets", "simplyrets")
+        given()
                 .pathParam("mlsId", aProperty)
                 .when().get("/properties/{mlsId}")
                 .then()
@@ -77,7 +77,7 @@ public class RestApiTest extends BaseTest{
 
     @Test
     public void getInvalidProperty(){
-        given().auth().basic("simplyrets", "simplyrets")
+        given()
                 .pathParam("mlsId", 10051990)
                 .when().get("/properties/{mlsId}")
                 .then()
@@ -88,10 +88,10 @@ public class RestApiTest extends BaseTest{
     @Test
     public void complexParsingAndValidation(){
 
-        String response = given().auth().basic("simplyrets", "simplyrets").when().get("/properties").asString();
+        String response = given().when().get("/properties").asString();
         List<String> propIds = from(response).getList("property.findAll {it.bathsHalf == 6}.bathsFull");
 
-        List<String> Ids = given().auth().basic("simplyrets", "simplyrets").when().get("/properties").path("property.findAll {it.bathsHalf == 2}.bathsFull");
+        List<String> Ids = given().when().get("/properties").path("property.findAll {it.bathsHalf == 2}.bathsFull");
 
         System.out.print(propIds.size());
         System.out.print(Ids.size());
@@ -100,7 +100,7 @@ public class RestApiTest extends BaseTest{
     @Test
     public void testHeaders(){
 
-        Response response = given().auth().basic("simplyrets", "simplyrets")
+        Response response = given()
                 .when().get("/properties")
                 .then()
                 .header("Content-Type", equalTo("application/json; charset=utf-8"))
@@ -122,7 +122,7 @@ public class RestApiTest extends BaseTest{
 
     @Test
     public void testCookies(){
-        Response response = given().auth().basic("simplyrets", "simplyrets")
+        Response response = given()
                 .when().get("/properties")
                 .then()
                 .extract().response();
@@ -131,12 +131,12 @@ public class RestApiTest extends BaseTest{
         System.out.println("All cookies are : " + allCookies.toString());
 
         Cookie detailedCookie = response.getDetailedCookie("");
-        detailedCookie.getComment();
+//        detailedCookie.getComment();
     }
 
     @Test
     public void testStatus(){
-        Response response = given().auth().basic("simplyrets", "simplyrets")
+        Response response = given()
                 .when().get("/properties")
                 .then()
                 .extract().response();
@@ -149,7 +149,7 @@ public class RestApiTest extends BaseTest{
 
     @Test
     public void testResponseTime(){
-        Response response = given().auth().basic("simplyrets", "simplyrets")
+        Response response = given()
                 .when().get("/properties")
                 .then()
                 .extract().response();

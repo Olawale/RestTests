@@ -3,6 +3,8 @@ package RestTests;
 import  io.restassured.RestAssured;
 import org.junit.BeforeClass;
 
+import static io.restassured.RestAssured.basic;
+
 public class BaseTest {
 
 
@@ -27,5 +29,7 @@ public class BaseTest {
 //        System.out.println("The host env var is " + baseHost);
 //        RestAssured.baseURI = baseHost;
         RestAssured.baseURI = "https://api.simplyrets.com/";
+        RestAssured.authentication = basic("simplyrets", "simplyrets");
+        RestAssured.useRelaxedHTTPSValidation();
     }
 }
