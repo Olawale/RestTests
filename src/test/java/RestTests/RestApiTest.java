@@ -106,7 +106,7 @@ public class RestApiTest extends BaseTest{
                 .then()
                 .header("Content-Type", equalTo("application/json; charset=utf-8"))
                 .extract().response();
-//        System.out.println(response.headers().toString());
+        System.out.println(response.headers().toString());
 //        System.out.println(response.headers().size());
 //        System.out.println(response.header("Content-Type"));
 
