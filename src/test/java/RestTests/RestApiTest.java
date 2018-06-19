@@ -108,7 +108,7 @@ public class RestApiTest extends BaseTest{
                 .extract().response();
 //        System.out.println(response.headers().toString());
 //        System.out.println(response.headers().size());
-//        System.out.println(response.header("Content-Type"));
+        System.out.println(response.header("Content-Type"));
 
         Headers hd = response.getHeaders();
         List<String> hd_values = hd.getValues("Content-Type"); // Multivalue headers
