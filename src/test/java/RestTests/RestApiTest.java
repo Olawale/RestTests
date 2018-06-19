@@ -106,7 +106,7 @@ public class RestApiTest extends BaseTest{
                 .then()
                 .header("Content-Type", equalTo("application/json; charset=utf-8"))
                 .extract().response();
-        System.out.println(response.headers().toString());
+//        System.out.println(response.headers().toString());
 //        System.out.println(response.headers().size());
         System.out.println(response.header("Content-Type"));
 
@@ -114,10 +114,10 @@ public class RestApiTest extends BaseTest{
         List<String> hd_values = hd.getValues("Content-Type"); // Multivalue headers
         System.out.println(hd_values.toString());
 
-//        given().auth().basic("simplyrets", "simplyrets")
-//                .when().get("/properties")
-//                .then()
-//                .header("Content-Type", equalTo("application/json; charset=utf-8"));
+        given().auth().basic("simplyrets", "simplyrets")
+                .when().get("/properties")
+                .then()
+                .header("Content-Type", equalTo("application/json; charset=utf-8"));
 
     }
 
