@@ -26,7 +26,8 @@ public class RestApiTest extends BaseTest{
                 .when().get("/properties")
                 .then()
                 .contentType(ContentType.JSON)
-//                .time(lessThan(3l), TimeUnit.SECONDS)
+                .time(lessThan(3l), TimeUnit.SECONDS)
+                .body(is(not(empty())))
                 .statusCode(200);
     }
 
@@ -38,9 +39,9 @@ public class RestApiTest extends BaseTest{
                 .then()
                 .extract().path("mlsId");
 
-        int aProperty = mlsId.get(18);
+        int aProperty = mlsId.get(1);
 
-        System.out.println("Total number of properties is " +  mlsId.size());
+       // System.out.println("Total number of properties is " +  mlsId.size());
         System.out.println("The property Id is " + aProperty);
 
         given()
